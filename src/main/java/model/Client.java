@@ -22,7 +22,7 @@ public class Client {
     @Column(name = "phone")
     private String phone;
 
-    @OneToMany(mappedBy = "client")
+    @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
     private List<Appointment> appointments;
 
     public Client() {
@@ -104,7 +104,6 @@ public class Client {
                 ", street='" + street + '\'' +
                 ", streetNumber='" + streetNumber + '\'' +
                 ", phone='" + phone + '\'' +
-                ", appointments=" + appointments +
                 '}';
     }
 }

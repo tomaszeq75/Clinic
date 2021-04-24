@@ -11,5 +11,12 @@ public class App {
         ClinicDAO clinicDAO = new ClinicDAO();
         System.out.println(clinicDAO.getAllDoctors());
 
+        clinicDAO.getVisitsByClientPesel("1111111111");
+
+        Doctor doctor = new Doctor("Jan", "Kowalski", "", "5");
+        clinicDAO.addDoctor(doctor);
+        System.out.println(clinicDAO.getAllDoctors());
+
+
     }
 }

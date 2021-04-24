@@ -6,6 +6,7 @@ import org.hibernate.annotations.NamedQuery;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table (name="doctors")
@@ -38,8 +39,7 @@ public class Doctor {
     public Doctor() {
     }
 
-    public Doctor(int id, String firstName, String lastName, String specializations, String room) {
-        this.id = id;
+    public Doctor(String firstName, String lastName, String specializations, String room) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.specializations = specializations;
@@ -96,5 +96,18 @@ public class Doctor {
                 ", specializations='" + specializations + '\'' +
                 ", room='" + room + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Doctor doctor = (Doctor) o;
+        return Objects.equals(firstName, doctor.firstName) && Objects.equals(lastName, doctor.lastName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(firstName, lastName);
     }
 }
