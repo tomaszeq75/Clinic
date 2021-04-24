@@ -4,21 +4,21 @@ package model;
 import org.hibernate.annotations.NamedQueries;
 import org.hibernate.annotations.NamedQuery;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table (name="doctors")
-@NamedQueries({
-        @NamedQuery(name = "getId", query = "select e from Doctors e"),
-        @NamedQuery(name = "getFirstName", query = "select e from Doctors e"),
-        @NamedQuery(name = "getLastName", query = "select e from Doctors e"),
-        @NamedQuery(name = "getSpecialization", query = "select e from Doctors e"),
-        @NamedQuery(name = "getRoom", query = "select e from Doctors e"),
-})
+//@NamedQueries({
+//        @NamedQuery(name = "getAll", query = "select e from Doctors"),
+//        @NamedQuery(name = "getId", query = "select e from Doctors e"),
+//        @NamedQuery(name = "getFirstName", query = "select e from Doctors e"),
+//        @NamedQuery(name = "getLastName", query = "select e from Doctors e"),
+//        @NamedQuery(name = "getSpecialization", query = "select e from Doctors e"),
+//        @NamedQuery(name = "getRoom", query = "select e from Doctors e"),
+//})
 public class Doctor {
+    public static final String GET_ALL = "getAll";
 
     @Id
     @Column (name = "id")
@@ -27,10 +27,16 @@ public class Doctor {
     private String firstName;
     @Column (name = "last_name")
     private String lastName;
-    @Column (name = "specializations")
+    @Column (name = "specialization")
     private String specializations;
     @Column (name = "room")
     private String room;
+
+    @OneToMany(mappedBy = "doctor")
+    private List<Appointment> appointments;
+
+    public Doctor() {
+    }
 
     public Doctor(int id, String firstName, String lastName, String specializations, String room) {
         this.id = id;

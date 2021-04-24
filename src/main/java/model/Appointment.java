@@ -9,13 +9,14 @@ import java.util.Date;
 public class Appointment {
     @Id
     private int id;
-    @Column(name = "pesel")
-    private String pesel;
-    @Column(name = "doctor_id")
-    private int doctorId;
-    @Column(name = "date_time")
-    private LocalDateTime dateTime;
 
-//    @ManyToOne
-//@JoinColumn(name = "")
+    @ManyToOne
+    @JoinColumn(name = "pesel")
+    private Client client;
+
+    @ManyToOne
+    @JoinColumn(name = "doctor_id")
+    private Doctor doctor;
+
+    private LocalDateTime dateTime;
 }

@@ -1,9 +1,7 @@
 package model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "clients")
@@ -23,6 +21,9 @@ public class Client {
     private String streetNumber;
     @Column(name = "phone")
     private String phone;
+
+    @OneToMany(mappedBy = "client")
+    private List<Appointment> appointments;
 
     public Client() {
     }

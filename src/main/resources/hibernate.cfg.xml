@@ -9,5 +9,7 @@
         <property name="connection.password">root</property>
         <property name="dialect">org.hibernate.dialect.MySQL8Dialect</property>
         <mapping class="model.Client"/>
+        <mapping class="model.Doctor"/>
+        <mapping class="model.Appointment"/>
     </session-factory>
 </hibernate-configuration>
