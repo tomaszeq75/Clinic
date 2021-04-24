@@ -32,7 +32,7 @@ public class Doctor {
     @Column (name = "room")
     private String room;
 
-    @OneToMany(mappedBy = "doctor")
+    @OneToMany(mappedBy = "doctor", fetch = FetchType.EAGER)
     private List<Appointment> appointments;
 
     public Doctor() {
@@ -85,5 +85,16 @@ public class Doctor {
 
     public void setRoom(String room) {
         this.room = room;
+    }
+
+    @Override
+    public String toString() {
+        return "Doctor{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", specializations='" + specializations + '\'' +
+                ", room='" + room + '\'' +
+                '}';
     }
 }

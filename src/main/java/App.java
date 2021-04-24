@@ -7,14 +7,9 @@ import java.util.List;
 
 public class App {
     public static void main(String[] args) {
-        SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").buildSessionFactory();
-        Session session = factory.openSession();
 
-        List<Doctor> resultList = session.createQuery("from Doctor").getResultList();
+        ClinicDAO clinicDAO = new ClinicDAO();
+        System.out.println(clinicDAO.getAllDoctors());
 
-        System.out.println(resultList);
-
-        session.close();
-        factory.close();
     }
 }
