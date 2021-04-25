@@ -1,4 +1,5 @@
 import model.Client;
+import model.ClientDTO;
 import model.Doctor;
 
 import java.util.Scanner;
