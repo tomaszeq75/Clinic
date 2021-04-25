@@ -1,41 +1,16 @@
 package model;
 
-import javax.persistence.*;
-import java.util.List;
 
-@Entity
-@Table(name = "clients")
-public class Client {
-    @Id
-    @Column(name = "pesel")
+public class ClientDTO {
     private String pesel;
-    @Column(name = "first_name")
     private String firstName;
-    @Column(name = "last_name")
     private String lastName;
-    @Column(name = "city")
     private String city;
-    @Column(name = "street")
     private String street;
-    @Column(name = "street_number")
     private String streetNumber;
-    @Column(name = "phone")
     private String phone;
 
-    @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
-    private List<Appointment> appointments;
-
-    public Client() {
-    }
-
-    public Client(String pesel, String firstName, String lastName, String city, String street, String streetNumber, String phone) {
-        this.pesel = pesel;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.city = city;
-        this.street = street;
-        this.streetNumber = streetNumber;
-        this.phone = phone;
+    public ClientDTO() {
     }
 
     public String getPesel() {
@@ -92,10 +67,5 @@ public class Client {
 
     public void setPhone(String phone) {
         this.phone = phone;
-    }
-
-    @Override
-    public String toString() {
-        return "[Client: " + pesel + " : " + firstName + ' ' + lastName + " : " + city + ' ' + street + ' ' + streetNumber + " : " + phone + ']';
     }
 }

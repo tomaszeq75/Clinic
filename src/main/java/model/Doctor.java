@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table (name="doctors")
+@Table(name = "doctors")
 //@NamedQueries({
 //        @NamedQuery(name = "getAll", query = "select e from Doctors"),
 //        @NamedQuery(name = "getId", query = "select e from Doctors e"),
@@ -22,15 +22,15 @@ public class Doctor {
     public static final String GET_ALL = "getAll";
 
     @Id
-    @Column (name = "id")
+    @Column(name = "id")
     private int id;
-    @Column (name = "first_name")
+    @Column(name = "first_name")
     private String firstName;
-    @Column (name = "last_name")
+    @Column(name = "last_name")
     private String lastName;
-    @Column (name = "specialization")
+    @Column(name = "specialization")
     private String specializations;
-    @Column (name = "room")
+    @Column(name = "room")
     private String room;
 
     @OneToMany(mappedBy = "doctor", fetch = FetchType.EAGER)
@@ -89,13 +89,8 @@ public class Doctor {
 
     @Override
     public String toString() {
-        return "Doctor{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", specializations='" + specializations + '\'' +
-                ", room='" + room + '\'' +
-                '}';
+        return "[Dr. " + id + ": " + firstName + ' ' + lastName + " : "
+                + (specializations != null ? specializations + " : " : "") + room + ']';
     }
 
     @Override

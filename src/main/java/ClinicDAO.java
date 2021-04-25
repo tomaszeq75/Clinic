@@ -1,6 +1,7 @@
 import model.Appointment;
 import model.Client;
 import model.Doctor;
+import model.DoctorDTO;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -30,11 +31,31 @@ public class ClinicDAO {
         return true;
     }
 
-    public boolean removeDoctor(Doctor doctor) {
-        return true;
+    public boolean removeDoctor(int id) {
+        boolean result = true;
+        Doctor doctor = new Doctor();
+        doctor.setId(id);
+
+        initialize();
+        Transaction transaction = session.beginTransaction();
+        try {
+            session.remove(doctor);
+            transaction.commit();
+        } catch (Exception e) {
+            System.out.println("Nie ma takiego lekarza");
+            result = false;
+        }
+        close();
+        return result;
     }
 
-    public boolean modifyDoctor(Doctor doctor) {
+    public boolean modifyDoctor(int id, DoctorDTO doctor) {
+        doctor.setId(id);
+        initialize();
+        Transaction transaction = session.beginTransaction();
+//        session.find()
+        session.persist(doctor);
+        close();
         return true;
     }
 
