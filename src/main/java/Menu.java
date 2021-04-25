@@ -1,8 +1,6 @@
-import model.Client;
-import model.ClientDTO;
-import model.Doctor;
-import model.DoctorDTO;
+import model.*;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class Menu {
@@ -61,8 +59,11 @@ public class Menu {
             } else if (user.equals("3")) {
                 System.out.println("Podaj pesel klienta do edycji");
                 String pesel = keyboard.nextLine();
-                Client client = new Client();
-                client.getPesel();
+                ClientDTO client = new ClientDTO();
+                client.setPesel(pesel);
+                clinicDAO.modifyClient(client);
+                // todo uzupełnić resztę danych
+//                client.getPesel();
 //                client.
             } else if (user.equals("4")) {
                 System.out.println("Podaj wizytę którą chcesz zmodyfikować");
@@ -71,7 +72,8 @@ public class Menu {
             } else if (user.equals("5")) {
                 System.out.println("Podaj pesel");
                 String pesel = keyboard.nextLine();
-                clinicDAO.getVisitsByClientPesel(pesel);
+                List<AppointmentDetails> visitsByClientPesel = clinicDAO.getVisitsByClientPesel(pesel);
+                System.out.println(visitsByClientPesel);
             } else if (user.equals("6")) {
                 System.out.println("Podaj imię lekarza");
                 String firstName = keyboard.nextLine();

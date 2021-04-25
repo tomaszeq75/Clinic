@@ -7,7 +7,7 @@ import java.util.List;
 
 public class AppTW {
     public static void main(String[] args) {
-        ClinicDAO clinicDAO = new ClinicDAO();
+//        ClinicDAO clinicDAO = new ClinicDAO();
 
 //        DoctorDTO doctorDTO = new DoctorDTO("Jan", "Kowalski", "okulista", "5");
 //        clinicDAO.addDoctor(doctorDTO);
@@ -33,8 +33,9 @@ public class AppTW {
 //        clinicDAO.addClient(clientDTO);
 //        clinicDAO.modifyClient(clientDTO);
 
-        List<AppointmentDetails> visitsByClientPesel = clinicDAO.getVisitsByClientPesel("00000000001");
-        System.out.println(visitsByClientPesel);
+//        List<AppointmentDetails> visitsByClientPesel = clinicDAO.getVisitsByClientPesel("00000000001");
+//        System.out.println(visitsByClientPesel);
+
 
 
     }
