@@ -30,12 +30,37 @@ public class ClinicDAO {
         return true;
     }
 
+    public boolean removeDoctor(Doctor doctor) {
+        return true;
+    }
+
+    public boolean modifyDoctor(Doctor doctor) {
+        return true;
+    }
+
     public List<Doctor> getAllDoctors() {
         List<Doctor> doctors = new ArrayList<>();
         initialize();
         doctors = session.createQuery("from Doctor").getResultList();
         close();
         return doctors;
+    }
+
+    public boolean addClient(Client client) {
+        return true;
+    }
+
+    public void modifyClient(Client client) {
+
+    }
+
+    public List<Appointment> getAppsByDoctor(Doctor doctor) {
+        List<Appointment> appointments = new ArrayList<>();
+        return appointments;
+    }
+
+    public boolean setAppById(int drId, String pesel) {
+        return true;
     }
 
     public void getVisitsByClientPesel(String pesel) {
