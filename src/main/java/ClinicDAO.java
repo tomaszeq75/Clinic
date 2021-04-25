@@ -181,29 +181,32 @@ public class ClinicDAO {
     }
 
     public boolean setAppointment(String pesel, int drId, int appId) {
-        boolean result = true;
-        String queryString = "from Appointment a where a.doctor.id = :drId AND a.id = :appId AND a.client.pesel is null";
         initialize();
-        Query query = session.createQuery(queryString);
-        query.setParameter("drId", drId);
-        query.setParameter("appId", appId);
-        Appointment appointment = (Appointment) query.getSingleResult();
-        if (appointment == null) {
-            System.out.println("błędne dane");
-            result = false;
-        } else {
-            Doctor doctor = session.find(Doctor.class, drId);
-            Client client = session.find(Client.class, pesel);
-            System.out.println(doctor);
-            System.out.println(client);
+        Appointment appointment = session.find(Appointment.class, appId);
+        Doctor doctor = session.find(Doctor.class, drId);
+        Client client = session.find(Client.class, pesel);
+        if (appointment != null && doctor != null && client != null
+                && appointment.getClient() == null && appointment.getDoctor() == doctor) {
             Transaction transaction = session.beginTransaction();
             appointment.setDoctor(doctor);
             appointment.setClient(client);
             transaction.commit();
+            close();
+            return true;
+        }
+
+        if (doctor == null) System.out.println("nie ma lekarza o id = " + drId);
+        if (client == null) System.out.println("nie ma pacjenta o nr pesel = " + pesel);
+        if (appointment == null) {
+            System.out.println("nie ma terminu o id = " + appId);
+        } else if (appointment.getClient() != null) {
+            System.out.println("termin o id = " + appId + " jest już zajęty");
+        } else if (appointment.getDoctor() != doctor) {
+            System.out.println("termin o id = " + appId + " należy do doktora o id = " + appointment.getDoctor().getId());
         }
 
         close();
-        return result;
+        return false;
     }
 
     public void initialize() {
