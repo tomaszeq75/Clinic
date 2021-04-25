@@ -59,11 +59,6 @@ public class Appointment {
 
     @Override
     public String toString() {
-        return "Appointment{" +
-                "id=" + id +
-                ", client=" + client +
-                ", doctor=" + doctor +
-                ", dateTime=" + dateTime +
-                '}';
+        return "[wizyta: " + id + " : " + client + " : " + doctor + " : " + dateTime + ']';
     }
 }

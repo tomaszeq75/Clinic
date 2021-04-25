@@ -10,6 +10,13 @@ public class DoctorDTO {
     public DoctorDTO() {
     }
 
+    public DoctorDTO(String firstName, String lastName, String specializations, String room) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.specializations = specializations;
+        this.room = room;
+    }
+
     public int getId() {
         return id;
     }
