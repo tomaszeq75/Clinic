@@ -132,6 +132,24 @@ public class ClinicDAO {
         return true;
     }
 
+    public List<AppointmentDetails> getAppByDoctorId(int drId, boolean freeOnly) {
+        List<Appointment> appointments = new ArrayList<>();
+        List<AppointmentDetails> appointmentDetails = new ArrayList<>();
+        String queryString = "select a from Appointment a where a.doctor.id = :drId";
+        if (freeOnly) {
+            queryString += " and a.client.pesel is null";
+        }
+        initialize();
+        Query query = session.createQuery(queryString);
+        query.setParameter("drId", drId);
+        appointments = query.getResultList();
+        for (Appointment a : appointments) {
+            appointmentDetails.add(getAppointmentDetails(a));
+        }
+        close();
+        return appointmentDetails;
+    }
+
     public List<AppointmentDetails> getVisitsByClientPesel(String pesel) {
         List<Appointment> appointments = new ArrayList<>();
         List<AppointmentDetails> appDetailsList = new ArrayList<>();
@@ -151,9 +169,11 @@ public class ClinicDAO {
     private AppointmentDetails getAppointmentDetails(Appointment appointment) {
         AppointmentDetails appDetail = new AppointmentDetails();
         appDetail.setId(appointment.getId());
-        appDetail.setPesel(appointment.getClient().getPesel());
-        appDetail.setFirstName(appointment.getClient().getFirstName());
-        appDetail.setFirstName(appointment.getClient().getLastName());
+        if (appointment.getClient() != null) {
+            appDetail.setPesel(appointment.getClient().getPesel());
+            appDetail.setFirstName(appointment.getClient().getFirstName());
+            appDetail.setFirstName(appointment.getClient().getLastName());
+        }
         appDetail.setDrLastName(appointment.getDoctor().getLastName());
         appDetail.setRoom(appointment.getDoctor().getRoom());
         appDetail.setDateTime(appointment.getDateTime());
