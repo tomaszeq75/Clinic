@@ -13,6 +13,16 @@ public class ClientDTO {
     public ClientDTO() {
     }
 
+    public ClientDTO(String pesel, String firstName, String lastName, String city, String street, String streetNumber, String phone) {
+        this.pesel = pesel;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.city = city;
+        this.street = street;
+        this.streetNumber = streetNumber;
+        this.phone = phone;
+    }
+
     public String getPesel() {
         return pesel;
     }

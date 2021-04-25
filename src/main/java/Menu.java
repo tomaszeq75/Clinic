@@ -1,6 +1,7 @@
 import model.Client;
 import model.ClientDTO;
 import model.Doctor;
+import model.DoctorDTO;
 
 import java.util.Scanner;
 
@@ -43,7 +44,7 @@ public class Menu {
                 String streetNumber = keyboard.nextLine();
                 System.out.println("Podaj numer telefonu");
                 String phone = keyboard.nextLine();
-                Client client = new Client(pesel,firstName,lastName,city,street,
+                ClientDTO client = new ClientDTO(pesel,firstName,lastName,city,street,
                         streetNumber,phone);
                 clinicDAO.addClient(client);
             } else if (user.equals("2")) {
@@ -80,18 +81,17 @@ public class Menu {
                 String spec = keyboard.nextLine();
                 System.out.println("Podaj numer pokoju");
                 String room = keyboard.nextLine();
-                Doctor doctor = new Doctor(firstName, lastName, spec, room);
+                DoctorDTO doctor = new DoctorDTO(firstName, lastName, spec, room);
                 clinicDAO.addDoctor(doctor);
             } else if (user.equals("7")) {
                 System.out.println("Podaj Id lekarza");
-                String doctorId = keyboard.nextLine();
-                Doctor doctor = new Doctor();
-                clinicDAO.removeDoctor(doctor);
+                int doctorId = keyboard.nextInt();
+                clinicDAO.removeDoctor(doctorId);
             } else if (user.equals("8")) {
                 System.out.println("Podaj Id lekarza");
-                String doctorId = keyboard.nextLine();
-                Doctor doctor = new Doctor();
-                clinicDAO.modifyDoctor(doctor);
+                int doctorId = keyboard.nextInt();
+                DoctorDTO doctorDTO = new DoctorDTO();
+                clinicDAO.modifyDoctor(doctorId,doctorDTO);
             } else if (user.equals("9")) {
                 System.out.println(clinicDAO.getAllDoctors());
             } else if (user.equals("10")) {
