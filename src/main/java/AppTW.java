@@ -36,11 +36,11 @@ public class AppTW {
 //        List<AppointmentDetails> visitsByClientPesel = clinicDAO.getVisitsByClientPesel("00000000001");
 //        System.out.println(visitsByClientPesel);
 
-        List<AppointmentDetails> appByDoctorId = clinicDAO.getAppByDoctorId(1, false);
-        appByDoctorId.forEach(System.out::println);
-        appByDoctorId = clinicDAO.getAppByDoctorId(1, true);
+        List<AppointmentDetails> appByDoctorId = clinicDAO.getAppByDoctorId(1, true);
         appByDoctorId.forEach(System.out::println);
 
+        clinicDAO.setAppointment("00000000001", 11, 30);
+        appByDoctorId = clinicDAO.getAppByDoctorId(1, false);
 
     }
 }

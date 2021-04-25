@@ -180,6 +180,32 @@ public class ClinicDAO {
         return appDetail;
     }
 
+    public boolean setAppointment(String pesel, int drId, int appId) {
+        boolean result = true;
+        String queryString = "from Appointment a where a.doctor.id = :drId AND a.id = :appId AND a.client.pesel is null";
+        initialize();
+        Query query = session.createQuery(queryString);
+        query.setParameter("drId", drId);
+        query.setParameter("appId", appId);
+        Appointment appointment = (Appointment) query.getSingleResult();
+        if (appointment == null) {
+            System.out.println("błędne dane");
+            result = false;
+        } else {
+            Doctor doctor = session.find(Doctor.class, drId);
+            Client client = session.find(Client.class, pesel);
+            System.out.println(doctor);
+            System.out.println(client);
+            Transaction transaction = session.beginTransaction();
+            appointment.setDoctor(doctor);
+            appointment.setClient(client);
+            transaction.commit();
+        }
+
+        close();
+        return result;
+    }
+
     public void initialize() {
         factory = new Configuration().configure("hibernate.cfg.xml").buildSessionFactory();
         session = factory.openSession();
