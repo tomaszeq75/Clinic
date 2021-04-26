@@ -209,6 +209,17 @@ public class ClinicDAO {
         return false;
     }
 
+    public Client getClient(String pesel) {
+        initialize();
+        Client client = session.find(Client.class,pesel);
+
+        close();
+        if (client == null) {
+            System.out.println("Nie ma takiego klienta");
+        }
+        return client;
+    }
+
     public void initialize() {
         factory = new Configuration().configure("hibernate.cfg.xml").buildSessionFactory();
         session = factory.openSession();
