@@ -128,7 +128,7 @@ public class Menu {
                 System.out.println("Podaj Id lekarza");
                 int doctorId = keyboard.nextInt();
 //                System.out.println(clinicDAO.getAppByDoctorId(doctorId,true));
-                clinicDAO.getAppByDoctorId(doctorId,true).forEach(System.out::println);
+                clinicDAO.getAppByDoctorId(doctorId,false).forEach(System.out::println);
             } else if (user.equals("11")) {
                 System.out.println("Podaj pesel");
                 String pesel = keyboard.nextLine();
