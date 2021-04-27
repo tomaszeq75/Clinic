@@ -166,6 +166,11 @@ public class ClinicDAO {
         return appDetailsList;
     }
 
+    public boolean cancelVisit(String pesel, int visitNumber) {
+        boolean result = true;
+        return result;
+    }
+
     private AppointmentDetails getAppointmentDetails(Appointment appointment) {
         AppointmentDetails appDetail = new AppointmentDetails();
         appDetail.setId(appointment.getId());
