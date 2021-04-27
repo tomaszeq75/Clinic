@@ -1,6 +1,7 @@
 package model;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class AppointmentDetails {
     private int id;
@@ -82,7 +83,15 @@ public class AppointmentDetails {
 
     @Override
     public String toString() {
-        return "Wizyta: " + id + " - " + pesel + " : " + firstName + ' ' + lastName +
-                " : dr. " + drLastName + " : p." + room + " : " + dateTime;
+        String dateTimeString = dateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm"));
+        StringBuilder stringBuilder = new StringBuilder("                                                                                                                       ");
+        stringBuilder.insert(0, "nr: " + id);
+        stringBuilder.insert(8, "| " + dateTimeString);
+        stringBuilder.insert(27, "| " + (pesel != null ? pesel : ""));
+        stringBuilder.insert(40, "| " + (firstName != null ? firstName : "") + ' ' + (lastName!= null ? lastName : ""));
+        stringBuilder.insert(80, "| dr " + drLastName);
+        stringBuilder.insert(110, "| p. " + room);
+
+        return stringBuilder.toString();
     }
 }

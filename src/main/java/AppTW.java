@@ -36,17 +36,17 @@ public class AppTW {
 //        List<AppointmentDetails> visitsByClientPesel = clinicDAO.getVisitsByClientPesel("00000000001");
 //        System.out.println(visitsByClientPesel);
 
-        List<AppointmentDetails> appByDoctorId = clinicDAO.getAppByDoctorId(1, true);
+        List<AppointmentDetails> appByDoctorId = clinicDAO.getAppByDoctorId(1, false);
         appByDoctorId.forEach(System.out::println);
 
-        clinicDAO.setAppointment("00000000001", 7, 34);
-        clinicDAO.setAppointment("00000000011", 1, 34);
-        clinicDAO.setAppointment("00000000001", 1, 834);
-        clinicDAO.setAppointment("00000000001", 1, 32);
-        clinicDAO.setAppointment("00000000001", 3, 34);
-        clinicDAO.setAppointment("00000000001", 1, 34);
-        appByDoctorId = clinicDAO.getAppByDoctorId(1, false);
-        appByDoctorId.forEach(System.out::println);
+//        clinicDAO.setAppointment("00000000001", 7, 34);
+//        clinicDAO.setAppointment("00000000011", 1, 34);
+//        clinicDAO.setAppointment("00000000001", 1, 834);
+//        clinicDAO.setAppointment("00000000001", 1, 32);
+//        clinicDAO.setAppointment("00000000001", 3, 34);
+//        clinicDAO.setAppointment("00000000001", 1, 34);
+//        appByDoctorId = clinicDAO.getAppByDoctorId(1, false);
+//        appByDoctorId.forEach(System.out::println);
 
     }
 }

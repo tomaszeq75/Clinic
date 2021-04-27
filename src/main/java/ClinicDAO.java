@@ -177,7 +177,7 @@ public class ClinicDAO {
         if (appointment.getClient() != null) {
             appDetail.setPesel(appointment.getClient().getPesel());
             appDetail.setFirstName(appointment.getClient().getFirstName());
-            appDetail.setFirstName(appointment.getClient().getLastName());
+            appDetail.setLastName(appointment.getClient().getLastName());
         }
         appDetail.setDrLastName(appointment.getDoctor().getLastName());
         appDetail.setRoom(appointment.getDoctor().getRoom());
