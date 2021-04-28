@@ -17,18 +17,18 @@ public class Menu {
 
         while (!user.equals("exit")) {
             System.out.println("MENU:");
-            System.out.print("1. Dodaj klienta |");
-            System.out.print("2. Dodaj wizytę |");
-            System.out.print("3. Edytuj klienta |");
-            System.out.print("4. Edytuj wizytę |");
-            System.out.print("5. Pokaż wizyty klienta |");
-            System.out.print("6. Dodaj lekarza |");
-            System.out.print("7. Usuń lekarza |");
-            System.out.print("8. Edytuj lekarza |");
-            System.out.print("9. Pokaż wszystkich lekarzy\n");
-            System.out.print("10. Pokaż wizyty lekarza |");
-            System.out.print("11. Pokaż klienta |");
-            System.out.println("exit. Wyjście z programu.");
+            System.out.println("1.|Dodaj klienta|");
+            System.out.println("2.|Dodaj wizytę|");
+            System.out.println("3.|Edytuj klienta|");
+            System.out.println("4.|Edytuj wizytę|");
+            System.out.println("5.|Pokaż wizyty klienta|");
+            System.out.println("6.|Dodaj lekarza|");
+            System.out.println("7.|Usuń lekarza|");
+            System.out.println("8.|Edytuj lekarza|");
+            System.out.println("9.|Pokaż wszystkich lekarzy|");
+            System.out.println("10.|Pokaż wizyty lekarza|");
+            System.out.println("11.|Pokaż klienta|");
+            System.out.println("exit.|Wyjście z programu.");
             user = keyboard.nextLine();
             if (user.equals("1")) {
                 System.out.println("Podaj pesel nowego klienta");

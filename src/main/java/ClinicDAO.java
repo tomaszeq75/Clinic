@@ -226,6 +226,8 @@ public class ClinicDAO {
         return false;
     }
 
+
+
     public Client getClient(String pesel) {
         initialize();
         Client client = session.find(Client.class,pesel);
