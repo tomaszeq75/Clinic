@@ -1,7 +1,4 @@
-import model.AppointmentDetails;
-import model.ClientDTO;
-import model.Doctor;
-import model.DoctorDTO;
+import model.*;
 
 import java.util.List;
 
@@ -35,9 +32,17 @@ public class AppTW {
 
 //        List<AppointmentDetails> visitsByClientPesel = clinicDAO.getVisitsByClientPesel("00000000001");
 //        System.out.println(visitsByClientPesel);
+        System.out.println(clinicDAO.getClient("2222222222"));
 
+        clinicDAO.setAppointment("3333333333", 1, 30);
+        clinicDAO.setAppointment("1111111111", 1, 31);
         List<AppointmentDetails> appByDoctorId = clinicDAO.getAppByDoctorId(1, false);
         appByDoctorId.forEach(System.out::println);
+        clinicDAO.cancelVisit("3333333333", 30);
+        clinicDAO.getAppByDoctorId(1, false).forEach(System.out::println);
+
+//        List<Client> clients = clinicDAO.getAllClients();
+//        clients.forEach(System.out::println);
 
 //        clinicDAO.setAppointment("00000000001", 7, 34);
 //        clinicDAO.setAppointment("00000000011", 1, 34);

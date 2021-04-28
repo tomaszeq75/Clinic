@@ -6,6 +6,8 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class ClinicDAO {
@@ -143,6 +145,7 @@ public class ClinicDAO {
         Query query = session.createQuery(queryString);
         query.setParameter("drId", drId);
         appointments = query.getResultList();
+        Collections.sort(appointments, Comparator.comparing(Appointment::getDateTime));
         for (Appointment a : appointments) {
             appointmentDetails.add(getAppointmentDetails(a));
         }
@@ -159,6 +162,7 @@ public class ClinicDAO {
         Query query = session.createQuery(queryString);
         query.setParameter("pesel", pesel);
         appointments = query.getResultList();
+        Collections.sort(appointments, Comparator.comparing(Appointment::getDateTime));
         for (Appointment a : appointments) {
             appDetailsList.add(getAppointmentDetails(a));
         }
@@ -168,6 +172,14 @@ public class ClinicDAO {
 
     public boolean cancelVisit(String pesel, int visitNumber) {
         boolean result = true;
+        initialize();
+        Appointment appointment = session.find(Appointment.class, visitNumber);
+        if (appointment != null && appointment.getClient().getPesel().equals(pesel)) {
+            Transaction tx = session.beginTransaction();
+            appointment.setClient(null);
+            tx.commit();
+        }
+        close();
         return result;
     }
 
@@ -223,6 +235,13 @@ public class ClinicDAO {
             System.out.println("Nie ma takiego klienta");
         }
         return client;
+    }
+
+    public List<Client> getAllClients() {
+        initialize();
+        List<Client> clients = session.createQuery("FROM Client").getResultList();
+        close();
+        return clients;
     }
 
     public void initialize() {
