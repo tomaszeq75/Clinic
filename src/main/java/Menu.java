@@ -135,6 +135,8 @@ public class Menu {
                 System.out.println(clinicDAO.getClient(pesel));
             }
         }
+
+        clinicDAO.factoryClose();
     }
 
 }

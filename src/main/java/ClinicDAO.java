@@ -15,6 +15,10 @@ public class ClinicDAO {
     private Session session;
     private SessionFactory factory;
 
+    public ClinicDAO() {
+        factory = new Configuration().configure("hibernate.cfg.xml").buildSessionFactory();
+    }
+
     private void getDoctorFromDTO(Doctor doctor, DoctorDTO doctorDTO) {
         doctor.setFirstName(doctorDTO.getFirstName());
         doctor.setLastName(doctorDTO.getLastName());
@@ -247,12 +251,14 @@ public class ClinicDAO {
     }
 
     public void initialize() {
-        factory = new Configuration().configure("hibernate.cfg.xml").buildSessionFactory();
         session = factory.openSession();
     }
 
     public void close() {
         session.close();
+    }
+
+    public void factoryClose() {
         factory.close();
     }
 }

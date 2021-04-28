@@ -53,5 +53,6 @@ public class AppTW {
 //        appByDoctorId = clinicDAO.getAppByDoctorId(1, false);
 //        appByDoctorId.forEach(System.out::println);
 
+        clinicDAO.factoryClose();
     }
 }
