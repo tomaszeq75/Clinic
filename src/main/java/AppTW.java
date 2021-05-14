@@ -1,6 +1,6 @@
-import model.*;
-
-import java.util.List;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 public class AppTW {
     public static void main(String[] args) {
@@ -32,14 +32,14 @@ public class AppTW {
 
 //        List<AppointmentDetails> visitsByClientPesel = clinicDAO.getVisitsByClientPesel("00000000001");
 //        System.out.println(visitsByClientPesel);
-        System.out.println(clinicDAO.getClient("2222222222"));
-
-        clinicDAO.setAppointment("3333333333", 1, 30);
-        clinicDAO.setAppointment("1111111111", 1, 31);
-        List<AppointmentDetails> appByDoctorId = clinicDAO.getAppByDoctorId(1, false);
-        appByDoctorId.forEach(System.out::println);
-        clinicDAO.cancelVisit("3333333333", 30);
-        clinicDAO.getAppByDoctorId(1, false).forEach(System.out::println);
+//        System.out.println(clinicDAO.getClient("2222222222"));
+//
+//        clinicDAO.setAppointment("3333333333", 1, 30);
+//        clinicDAO.setAppointment("1111111111", 1, 31);
+//        List<AppointmentDetails> appByDoctorId = clinicDAO.getAppByDoctorId(1, false);
+//        appByDoctorId.forEach(System.out::println);
+//        clinicDAO.cancelVisit("3333333333", 30);
+//        clinicDAO.getAppByDoctorId(1, false).forEach(System.out::println);
 
 //        List<Client> clients = clinicDAO.getAllClients();
 //        clients.forEach(System.out::println);
@@ -52,6 +52,17 @@ public class AppTW {
 //        clinicDAO.setAppointment("00000000001", 1, 34);
 //        appByDoctorId = clinicDAO.getAppByDoctorId(1, false);
 //        appByDoctorId.forEach(System.out::println);
+
+        VisitFactory visitFactory = new VisitFactory(clinicDAO);
+        LocalDate startDay = LocalDate.of(2021, 06, 01);
+        LocalDate endDay = LocalDate.of(2021, 06, 3);
+        LocalTime startTime = LocalTime.of(8, 0);
+        LocalTime endTime = LocalTime.of(16, 0);
+
+//        visitFactory.addAppointments(1, startDay, endDay, startTime, endTime);
+
+        visitFactory.menu();
+
 
         clinicDAO.factoryClose();
     }
