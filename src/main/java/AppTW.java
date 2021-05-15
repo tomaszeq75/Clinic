@@ -15,7 +15,7 @@ public class AppTW {
 //        clinicDAO.modifyDoctor(8, doctorDTO);
 //        System.out.println(clinicDAO.getAllDoctors());
 //
-//        clinicDAO.removeDoctor(7);
+        clinicDAO.removeDoctor(7);
 //        clinicDAO.removeDoctor(8);
 
 //        ClientDTO clientDTO = new ClientDTO();
@@ -54,10 +54,10 @@ public class AppTW {
 //        appByDoctorId.forEach(System.out::println);
 
         VisitFactory visitFactory = new VisitFactory(clinicDAO);
-        LocalDate startDay = LocalDate.of(2021, 06, 01);
-        LocalDate endDay = LocalDate.of(2021, 06, 3);
-        LocalTime startTime = LocalTime.of(8, 0);
-        LocalTime endTime = LocalTime.of(16, 0);
+//        LocalDate startDay = LocalDate.of(2021, 06, 01);
+//        LocalDate endDay = LocalDate.of(2021, 06, 3);
+//        LocalTime startTime = LocalTime.of(8, 0);
+//        LocalTime endTime = LocalTime.of(16, 0);
 
 //        visitFactory.addAppointments(1, startDay, endDay, startTime, endTime);
         visitFactory.menu();
