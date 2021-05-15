@@ -246,6 +246,27 @@ public class ClinicDAO {
         close();
     }
 
+    public void removeDoctorAppointment(int appointmentId) {
+        initialize();
+        Appointment appointment = session.find(Appointment.class, appointmentId);
+        Transaction transaction = session.beginTransaction();
+        session.remove(appointment);
+        transaction.commit();
+        close();
+    }
+
+    public List<Appointment> getDoctorAppointmentsBetween(int doctorId, LocalDateTime from, LocalDateTime to) {
+        List<Appointment> appointments = new ArrayList<>();
+        String queryString = "select a from Appointment a where a.dateTime BETWEEN :from AND :to";
+
+        initialize();
+        Query query = session.createQuery(queryString);
+        query.setParameter("from", from);
+        query.setParameter("to", to);
+        appointments = query.getResultList();
+        close();
+        return appointments;
+    }
 
     public Client getClient(String pesel) {
         initialize();

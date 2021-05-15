@@ -1,3 +1,4 @@
+import model.Appointment;
 import model.AppointmentDetails;
 
 import java.time.LocalDate;
@@ -11,7 +12,7 @@ public class VisitFactory {
 
     private ClinicDAO clinicDAO;
     private List<AppointmentDetails> appointments;
-    private final Scanner scanner;
+    private Scanner scanner, scanInt;
 
     private int doctorId;
     private LocalDate startDay, endDay;
@@ -20,23 +21,7 @@ public class VisitFactory {
     public VisitFactory(ClinicDAO clinicDAO) {
         this.clinicDAO = clinicDAO;
         scanner = new Scanner(System.in);
-    }
-
-    public void addAppointments() {
-
-        int period = 30;
-        LocalDate currentDay = startDay;
-        LocalTime currentTime = startTime;
-        while (currentDay.isBefore(endDay.plusDays(1))) {
-            while (currentTime.isBefore(endTime)) {
-                System.out.println(currentDay + " " + currentTime);
-                currentTime = currentTime.plusMinutes(30);
-                LocalDateTime dateTime = currentDay.atTime(currentTime);
-                clinicDAO.addDoctorAppointment(doctorId, dateTime);
-            }
-            currentDay = currentDay.plusDays(1);
-            currentTime = startTime;
-        }
+        scanInt = new Scanner(System.in);
     }
 
     private boolean checkIfVisitTermExist(LocalDateTime dateTime) {
@@ -48,10 +33,6 @@ public class VisitFactory {
         }
     }
 
-    private void getAppointments(int doctorId) {
-        appointments = clinicDAO.getAppByDoctorId(doctorId, false);
-    }
-
     public void menu() {
         System.out.print("\033[H\033[2J");
         System.out.flush();
@@ -61,15 +42,18 @@ public class VisitFactory {
             choice = scanner.nextLine();
             switch (choice) {
                 case "1":
+                    getDoctorId();
                     showAppointsments();
                     break;
                 case "2":
                     setAppointmentsDetailsToAdd();
                     addAppointments();
+                    showAppointsments();
                     break;
                 case "3":
                     setAppointmentsDetailsToRemove();
                     removeAppointments();
+                    showAppointsments();
                     break;
             }
 
@@ -79,25 +63,59 @@ public class VisitFactory {
     }
 
     private void showAppointsments() {
-        clinicDAO.getAppByDoctorId(getDoctorId(), false).forEach(System.out::println);
+        clinicDAO.getAppByDoctorId(doctorId, false).forEach(System.out::println);
+//        List<AppointmentDetails> appByDoctorId = clinicDAO.getAppByDoctorId(doctorId, false);
+//        appByDoctorId.forEach(System.out::println);
+    }
+
+    public void addAppointments() {
+        int period = 30;
+        LocalDate currentDay = startDay;
+        LocalTime currentTime = startTime;
+        while (currentDay.isBefore(endDay.plusDays(1))) {
+            while (currentTime.isBefore(endTime)) {
+                LocalDateTime dateTime = currentDay.atTime(currentTime);
+                clinicDAO.addDoctorAppointment(doctorId, dateTime);
+                currentTime = currentTime.plusMinutes(period);
+            }
+            currentDay = currentDay.plusDays(1);
+            currentTime = startTime;
+        }
     }
 
     private void removeAppointments() {
-        // todo
+        LocalDate currentDay = startDay;
+        while (currentDay.isBefore(endDay.plusDays(1))) {
+
+            LocalDateTime from = currentDay.atTime(startTime);
+            LocalDateTime to = currentDay.atTime(endTime);
+
+            List<Appointment> appointments = clinicDAO.getDoctorAppointmentsBetween(doctorId, from, to);
+            appointments.forEach(a -> clinicDAO.removeDoctorAppointment(a.getId()));
+            System.out.println("Usunięto: ");
+            appointments.forEach(System.out::println);
+
+            currentDay = currentDay.plusDays(1);
+        }
+        System.out.println("\nPozostały harmonogram:\n");
     }
 
     private void setAppointmentsDetailsToRemove() {
-        doctorId = getDoctorId();
+        getDoctorId();
         System.out.println("Podaj pierwszy dzień w formacie 'yyyy-mm-dd'");
         startDay = getDate();
         System.out.println("Podaj ostatni dzień w formacie 'yyyy-mm-dd'");
         endDay = getDate();
+        System.out.println("Podaj godzinę od w formacie 'hh:mm'");
+        startTime = getTime();
+        System.out.println("Podaj godzinę do w formacie 'hh:mm'");
+        endTime = getTime();
     }
+
     private void setAppointmentsDetailsToAdd() {
 
         showDoctors();
-        System.out.println("Podaj ID lekarza");
-        doctorId = getDoctorId();
+        getDoctorId();
         System.out.println("Podaj pierwszy dzień w formacie 'yyyy-mm-dd'");
         startDay = getDate();
         System.out.println("Podaj ostatni dzień w formacie 'yyyy-mm-dd'");
@@ -114,18 +132,18 @@ public class VisitFactory {
         System.out.println();
     }
 
-    private int getDoctorId() {
+    private void getDoctorId() {
         showDoctors();
         System.out.println("Podaj ID lekarza");
         int[] id = {0};
         boolean exist = false;
         do {
-            id[0] = Integer.parseInt(scanner.nextLine());
-            if (!clinicDAO.getAllDoctors().stream().anyMatch(x -> x.getId() == id[0])){
+            id[0] = scanInt.nextInt();
+            if (!clinicDAO.getAllDoctors().stream().anyMatch(x -> x.getId() == id[0])) {
                 System.out.println("Nie ma lekarza o takim ID");
             } else exist = true;
         } while (!exist);
-        return id[0];
+        doctorId = id[0];
     }
 
     private LocalDate getDate() {

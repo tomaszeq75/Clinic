@@ -60,7 +60,6 @@ public class AppTW {
         LocalTime endTime = LocalTime.of(16, 0);
 
 //        visitFactory.addAppointments(1, startDay, endDay, startTime, endTime);
-
         visitFactory.menu();
 
 
