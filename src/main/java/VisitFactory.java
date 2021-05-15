@@ -147,14 +147,19 @@ public class VisitFactory {
     }
 
     private LocalDate getDate() {
+        System.out.println("[Enter] - dzisiejsza data: " + LocalDate.now());
         LocalDate date = null;
-        do {
+        String dateAsString = scanner.nextLine();
+        if ("".equals(dateAsString)) {
+            date = LocalDate.now();
+        }
+        while (date == null) {
             try {
-                date = LocalDate.parse(scanner.nextLine());
+                date = LocalDate.parse(dateAsString);
             } catch (DateTimeParseException e) {
                 System.out.println("Błedny format daty, musi być podana w formacie 'yyyy-mm-dd'");
             }
-        } while (date == null);
+        }
         return date;
     }
 
