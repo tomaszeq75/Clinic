@@ -68,6 +68,12 @@ public class VisitFactory {
 //        appByDoctorId.forEach(System.out::println);
     }
 
+    public void showAppointsments(int doctorId) {
+        clinicDAO.getAppByDoctorId(doctorId, false).forEach(System.out::println);
+//        List<AppointmentDetails> appByDoctorId = clinicDAO.getAppByDoctorId(doctorId, false);
+//        appByDoctorId.forEach(System.out::println);
+    }
+
     public void addAppointments() {
         int period = 30;
         LocalDate currentDay = startDay;

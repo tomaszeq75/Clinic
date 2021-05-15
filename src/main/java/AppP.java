@@ -1,5 +1,7 @@
-import model.Client;
-import model.ClientDTO;
+import model.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class AppP {
     public static void main(String[] args) {
@@ -11,6 +13,12 @@ public class AppP {
         ClientDTO clientDTO = new ClientDTO();
 //        System.out.println(clientDTO.getPesel());
 //        System.out.println(clinicDAO.getClient("1111111111"));
-        System.out.println(clinicDAO.getPesel());
+//        System.out.println(clinicDAO.getPesel());
+        VisitFactory visitFactory = new VisitFactory(clinicDAO);
+        List<AppointmentDetails> appointmentDetails = new ArrayList<>();
+        visitFactory.showAppointsments(3);
+
+
+
     }
 }

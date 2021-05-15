@@ -60,6 +60,7 @@ public class Menu {
             } else if (user.equals("2")) {
                 System.out.println("Podaj pesel klienta");
                 String pesel = keyboard.nextLine();
+                System.out.println(clinicDAO.getAllDoctors());
                 System.out.println("Podaj Id lekarza");
                 int doctorId = keyboard.nextInt();
                 // Wyświetl wizyty lekarza.
@@ -109,13 +110,16 @@ public class Menu {
                 user = keyboard.nextLine();
                 while (!user.equals("exit")) {
                     if (user.equals("1")) {
-                        clinicDAO.getAllDoctors();
+                        System.out.println(clinicDAO.getAllDoctors());
                         System.out.println("Podaj Id Lekarza");
                         int doctorId = keyboard.nextInt();
-                        clinicDAO.getAppByDoctorId(doctorId,false);
+                        System.out.println(clinicDAO.getAppByDoctorId(doctorId, false));
+                        visitFactory.showAppointsments(doctorId);
                         System.out.println("Podaj Id wizyty");
                         int visitId = keyboard.nextInt();
                         clinicDAO.setAppointment(pesel,doctorId,visitId);
+                        System.out.println("Wizyta dodana");
+
                     }
                 }
             } else if (user.equals("6")) {
