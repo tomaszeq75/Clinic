@@ -89,7 +89,7 @@ public class Doctor {
 
     @Override
     public String toString() {
-        return "[Dr. " + id + ": " + firstName + ' ' + lastName + " : "
+        return "ID: " + id + ": " + firstName + ' ' + lastName + " : "
                 + (specializations != null ? specializations + " : " : "") + room + ']';
     }
 

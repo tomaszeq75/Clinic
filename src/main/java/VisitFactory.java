@@ -3,7 +3,6 @@ import model.AppointmentDetails;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Scanner;
@@ -52,17 +51,19 @@ public class VisitFactory {
     }
 
     public void menu() {
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
         String choice = "";
         do {
             showMenu();
             choice = scanner.nextLine();
             switch (choice) {
                 case "1":
-                    setAppointmentsDetails();
+                    setAppointmentsDetailsToAdd();
                     addAppointments();
                     break;
                 case "2":
-                    setAppointmentsDetails();
+                    setAppointmentsDetailsToRemove();
             }
 
         } while (!"x".equalsIgnoreCase(choice));
@@ -70,7 +71,17 @@ public class VisitFactory {
 
     }
 
-    private void setAppointmentsDetails() {
+    private void setAppointmentsDetailsToRemove() {
+        System.out.println("Podaj ID lekarza");
+        doctorId = getDoctorId();
+        System.out.println("Podaj pierwszy dzień w formacie 'yyyy-mm-dd'");
+        startDay = getDate();
+        System.out.println("Podaj ostatni dzień w formacie 'yyyy-mm-dd'");
+        endDay = getDate();
+    }
+    private void setAppointmentsDetailsToAdd() {
+
+
         System.out.println("Podaj ID lekarza");
         doctorId = getDoctorId();
         System.out.println("Podaj pierwszy dzień w formacie 'yyyy-mm-dd'");
@@ -117,10 +128,5 @@ public class VisitFactory {
         System.out.println("2. Usuń harmonogram wizyt lekarza");
         System.out.println("x. Wyjście");
     }
-
-    private class AppointmentsSetDetails {
-
-    }
-
 
 }
