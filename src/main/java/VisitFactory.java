@@ -34,8 +34,6 @@ public class VisitFactory {
     }
 
     public void menu() {
-        System.out.print("\033[H\033[2J");
-        System.out.flush();
         String choice = "";
         do {
             showMenu();
@@ -56,10 +54,7 @@ public class VisitFactory {
                     showAppointsments();
                     break;
             }
-
         } while (!"x".equalsIgnoreCase(choice));
-
-
     }
 
     private void showAppointsments() {

@@ -284,7 +284,7 @@ public class ClinicDAO {
         List<String> clients = new ArrayList<>();
         initialize();
         clients = session.createQuery("select pesel from Client").getResultList();
-
+        close();
         return clients;
     }
 

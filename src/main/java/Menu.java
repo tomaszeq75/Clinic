@@ -102,7 +102,7 @@ public class Menu {
                 System.out.println("Podaj pesel");
                 String pesel = keyboard.nextLine();
                 // Co chces zrobić? dodaj, edytuj, usuń, wyjdź.
-                System.out.println(clinicDAO.getVisitsByClientPesel(pesel));
+                clinicDAO.getVisitsByClientPesel(pesel).forEach(System.out::println);
                 System.out.println("1.| Dodaj wizytę|");
                 System.out.println("2.| Edytuj wizytę|");
                 System.out.println("exit.| wyjście");
@@ -162,7 +162,7 @@ public class Menu {
                 // Lista lekarzy, 1. co chcesz zrobić? wybierz lekarza, dodaj, edytuj, usuń, wyjdź. 2. co chcesz zrobić?
                 // usuń, edytuj, wyjdź
                 // pokaż wizyty. 3. co chcesz zrobić? dodaj, edytuj, usuń.
-                System.out.println(clinicDAO.getAllDoctors());
+                clinicDAO.getAllDoctors().forEach(System.out::println);
 
             } else if (user.equals("10")) {
                 // Lista wizyt. Co chcesz zrobić? dodaj, edytuj, usuń, wyjdź.
