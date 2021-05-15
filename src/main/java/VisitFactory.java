@@ -72,6 +72,7 @@ public class VisitFactory {
     }
 
     private void setAppointmentsDetailsToRemove() {
+        showDoctors();
         System.out.println("Podaj ID lekarza");
         doctorId = getDoctorId();
         System.out.println("Podaj pierwszy dzień w formacie 'yyyy-mm-dd'");
@@ -81,7 +82,7 @@ public class VisitFactory {
     }
     private void setAppointmentsDetailsToAdd() {
 
-
+        showDoctors();
         System.out.println("Podaj ID lekarza");
         doctorId = getDoctorId();
         System.out.println("Podaj pierwszy dzień w formacie 'yyyy-mm-dd'");
@@ -94,9 +95,18 @@ public class VisitFactory {
         endTime = getTime();
     }
 
+    private void showDoctors() {
+        System.out.println("\nLista lekarzy:");
+        clinicDAO.getAllDoctors().forEach(System.out::println);
+        System.out.println();
+    }
+
     private int getDoctorId() {
-        int id = Integer.parseInt(scanner.nextLine());
-        return id;
+        int[] id = {0};
+        do {
+            id[0] = Integer.parseInt(scanner.nextLine());
+        } while (clinicDAO.getAllDoctors().stream().anyMatch(x -> x.getId() != id[0]));
+        return id[0];
     }
 
     private LocalDate getDate() {

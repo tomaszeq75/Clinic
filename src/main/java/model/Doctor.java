@@ -90,7 +90,7 @@ public class Doctor {
     @Override
     public String toString() {
         return "ID: " + id + ": " + firstName + ' ' + lastName + " : "
-                + (specializations != null ? specializations + " : " : "") + room + ']';
+                + (specializations != null ? specializations + " : " : "") + "p. " + room ;
     }
 
     @Override
