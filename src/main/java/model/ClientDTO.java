@@ -1,6 +1,9 @@
 package model;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ClientDTO {
     private String pesel;
     private String firstName;
@@ -78,4 +81,16 @@ public class ClientDTO {
     public void setPhone(String phone) {
         this.phone = phone;
     }
+
+    public boolean checkPesel(String peselUser, List<String> peselDatabase) {
+        boolean boolPesel = false;
+        for (int i = 0; i < peselDatabase.size(); i++) {
+            if ((peselDatabase.get(i).equals(peselUser))) {
+                boolPesel = true;
+                System.out.println("Klient o podanym peselu już istnieje");
+            }
+        }
+        return boolPesel;
+    }
+
 }

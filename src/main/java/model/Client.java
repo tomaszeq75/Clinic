@@ -2,6 +2,7 @@ package model;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Scanner;
 
 @Entity
 @Table(name = "clients")
@@ -98,4 +99,5 @@ public class Client {
     public String toString() {
         return "[Client: " + pesel + " : " + firstName + ' ' + lastName + " : " + city + ' ' + street + ' ' + streetNumber + " : " + phone + ']';
     }
+
 }

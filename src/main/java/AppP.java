@@ -11,6 +11,6 @@ public class AppP {
         ClientDTO clientDTO = new ClientDTO();
 //        System.out.println(clientDTO.getPesel());
 //        System.out.println(clinicDAO.getClient("1111111111"));
-
+        System.out.println(clinicDAO.getPesel());
     }
 }

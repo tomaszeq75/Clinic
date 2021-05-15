@@ -279,6 +279,14 @@ public class ClinicDAO {
         return client;
     }
 
+    public List<String> getPesel() {
+        List<String> clients = new ArrayList<>();
+        initialize();
+        clients = session.createQuery("select pesel from Client").getResultList();
+
+        return clients;
+    }
+
     public List<Client> getAllClients() {
         initialize();
         List<Client> clients = session.createQuery("FROM Client").getResultList();

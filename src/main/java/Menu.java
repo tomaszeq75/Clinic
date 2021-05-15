@@ -1,7 +1,4 @@
-import model.Client;
-import model.ClientDTO;
-import model.Doctor;
-import model.DoctorDTO;
+import model.*;
 
 import java.util.Scanner;
 
@@ -10,6 +7,10 @@ public class Menu {
 
 
         ClinicDAO clinicDAO = new ClinicDAO();
+        ClientDTO clientDTO = new ClientDTO();
+        DoctorDTO doctorDTO = new DoctorDTO();
+        VisitFactory visitFactory = new VisitFactory(clinicDAO);
+
 
 
         Scanner keyboard = new Scanner(System.in);
@@ -28,11 +29,19 @@ public class Menu {
             System.out.println("9.|Pokaż wszystkich lekarzy|");
             System.out.println("10.|Pokaż wizyty lekarza|");
             System.out.println("11.|Pokaż klienta|");
+            System.out.println("12.|Harmonogram Wizyt");
             System.out.println("exit.|Wyjście z programu.");
             user = keyboard.nextLine();
             if (user.equals("1")) {
-                System.out.println("Podaj pesel nowego klienta");
-                String pesel = keyboard.nextLine();
+                String pesel;
+                boolean one;
+                do {
+                    System.out.println("Podaj pesel nowego klienta");
+                    // Sprawdź czy pesel jest w bazie. OK
+                    pesel = keyboard.nextLine();
+                    one = clientDTO.checkPesel(pesel, clinicDAO.getPesel());
+                } while (one == true);
+
                 System.out.println("Podaj Imię nowego klienta");
                 String firstName = keyboard.nextLine();
                 System.out.println("Podaj nazwisko nowego klienta");
@@ -45,19 +54,26 @@ public class Menu {
                 String streetNumber = keyboard.nextLine();
                 System.out.println("Podaj numer telefonu");
                 String phone = keyboard.nextLine();
-                ClientDTO client = new ClientDTO(pesel,firstName,lastName,city,street,
+                clientDTO = new ClientDTO(pesel,firstName,lastName,city,street,
                         streetNumber,phone);
-                clinicDAO.addClient(client);
+                clinicDAO.addClient(clientDTO);
             } else if (user.equals("2")) {
                 System.out.println("Podaj pesel klienta");
                 String pesel = keyboard.nextLine();
                 System.out.println("Podaj Id lekarza");
                 int doctorId = keyboard.nextInt();
+                // Wyświetl wizyty lekarza.
+                clinicDAO.getAppByDoctorId(doctorId,false).forEach(System.out::println);
                 System.out.println("Podaj Id wizyty");
+                // Sprawdź id wizyty czy isnieje
                 int visitId = keyboard.nextInt();
                 clinicDAO.setAppointment(pesel,doctorId,visitId);
 
             } else if (user.equals("3")) {
+                // Lista klientów w bazie
+                for (Client a : clinicDAO.getAllClients()) {
+                    System.out.println(a);
+                }
                 System.out.println("Podaj pesel klienta do edycji");
                 String pesel = keyboard.nextLine();
 
@@ -73,17 +89,35 @@ public class Menu {
                 String streetNumber = keyboard.nextLine();
                 System.out.println("Podaj numer telefonu");
                 String phone = keyboard.nextLine();
-                ClientDTO clientDTO = new ClientDTO(pesel,firstName,lastName,city,
+                clientDTO = new ClientDTO(pesel,firstName,lastName,city,
                         street,streetNumber,phone);
                 clinicDAO.modifyClient(clientDTO);
             } else if (user.equals("4")) {
-                System.out.println("Podaj wizytę którą chcesz zmodyfikować");
-                String visit = keyboard.nextLine();
-                //modifyVisit
+                // Lista wizyt w bazie
+                visitFactory.menu();
+//                System.out.println("Podaj wizytę którą chcesz zmodyfikować");
+//                String visit = keyboard.nextLine();
+//                //modifyVisit
             } else if (user.equals("5")) {
                 System.out.println("Podaj pesel");
                 String pesel = keyboard.nextLine();
+                // Co chces zrobić? dodaj, edytuj, usuń, wyjdź.
                 System.out.println(clinicDAO.getVisitsByClientPesel(pesel));
+                System.out.println("1.| Dodaj wizytę|");
+                System.out.println("2.| Edytuj wizytę|");
+                System.out.println("exit.| wyjście");
+                user = keyboard.nextLine();
+                while (!user.equals("exit")) {
+                    if (user.equals("1")) {
+                        clinicDAO.getAllDoctors();
+                        System.out.println("Podaj Id Lekarza");
+                        int doctorId = keyboard.nextInt();
+                        clinicDAO.getAppByDoctorId(doctorId,false);
+                        System.out.println("Podaj Id wizyty");
+                        int visitId = keyboard.nextInt();
+                        clinicDAO.setAppointment(pesel,doctorId,visitId);
+                    }
+                }
             } else if (user.equals("6")) {
                 System.out.println("Podaj imię lekarza");
                 String firstName = keyboard.nextLine();
@@ -93,9 +127,10 @@ public class Menu {
                 String spec = keyboard.nextLine();
                 System.out.println("Podaj numer pokoju");
                 String room = keyboard.nextLine();
-                DoctorDTO doctor = new DoctorDTO(firstName, lastName, spec, room);
-                clinicDAO.addDoctor(doctor);
+                doctorDTO = new DoctorDTO(firstName, lastName, spec, room);
+                clinicDAO.addDoctor(doctorDTO);
             } else if (user.equals("7")) {
+                // Lista lekarzy w bazie
                 System.out.println("Podaj Id lekarza");
                 int doctorId = keyboard.nextInt();
                 keyboard.nextLine();
@@ -109,6 +144,7 @@ public class Menu {
                 }
 
             } else if (user.equals("8")) {
+                // Lista lekarzy w bazie.
                 System.out.println("Podaj Id lekarza");
                 int doctorId = keyboard.nextInt();
                 keyboard.nextLine();
@@ -120,23 +156,33 @@ public class Menu {
                 String spec = keyboard.nextLine();
                 System.out.println("Podaj numer pokoju");
                 String room = keyboard.nextLine();
-                DoctorDTO doctorDTO = new DoctorDTO(firstName,lastName,spec,room);
+                doctorDTO = new DoctorDTO(firstName,lastName,spec,room);
                 clinicDAO.modifyDoctor(doctorId,doctorDTO);
             } else if (user.equals("9")) {
+                // Lista lekarzy, 1. co chcesz zrobić? wybierz lekarza, dodaj, edytuj, usuń, wyjdź. 2. co chcesz zrobić?
+                // usuń, edytuj, wyjdź
+                // pokaż wizyty. 3. co chcesz zrobić? dodaj, edytuj, usuń.
                 System.out.println(clinicDAO.getAllDoctors());
+
             } else if (user.equals("10")) {
+                // Lista wizyt. Co chcesz zrobić? dodaj, edytuj, usuń, wyjdź.
                 System.out.println("Podaj Id lekarza");
                 int doctorId = keyboard.nextInt();
 //                System.out.println(clinicDAO.getAppByDoctorId(doctorId,true));
                 clinicDAO.getAppByDoctorId(doctorId,false).forEach(System.out::println);
             } else if (user.equals("11")) {
+                // Lista klientów, co chcesz zrobić? 1. wybierz klienta, wyjdź 2. dodaj, edytuj, usuń, wyjdź.
                 System.out.println("Podaj pesel");
                 String pesel = keyboard.nextLine();
                 System.out.println(clinicDAO.getClient(pesel));
+            } else if (user.equals("12")) {
+                visitFactory.menu();
             }
         }
 
         clinicDAO.factoryClose();
     }
+
+
 
 }
