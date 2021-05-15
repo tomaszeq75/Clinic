@@ -31,6 +31,8 @@ public class VisitFactory {
             while (currentTime.isBefore(endTime)) {
                 System.out.println(currentDay + " " + currentTime);
                 currentTime = currentTime.plusMinutes(30);
+                LocalDateTime dateTime = currentDay.atTime(currentTime);
+                clinicDAO.addDoctorAppointment(doctorId, dateTime);
             }
             currentDay = currentDay.plusDays(1);
             currentTime = startTime;
@@ -59,11 +61,16 @@ public class VisitFactory {
             choice = scanner.nextLine();
             switch (choice) {
                 case "1":
+                    showAppointsments();
+                    break;
+                case "2":
                     setAppointmentsDetailsToAdd();
                     addAppointments();
                     break;
-                case "2":
+                case "3":
                     setAppointmentsDetailsToRemove();
+                    removeAppointments();
+                    break;
             }
 
         } while (!"x".equalsIgnoreCase(choice));
@@ -71,9 +78,15 @@ public class VisitFactory {
 
     }
 
+    private void showAppointsments() {
+        clinicDAO.getAppByDoctorId(getDoctorId(), false).forEach(System.out::println);
+    }
+
+    private void removeAppointments() {
+        // todo
+    }
+
     private void setAppointmentsDetailsToRemove() {
-        showDoctors();
-        System.out.println("Podaj ID lekarza");
         doctorId = getDoctorId();
         System.out.println("Podaj pierwszy dzień w formacie 'yyyy-mm-dd'");
         startDay = getDate();
@@ -102,10 +115,16 @@ public class VisitFactory {
     }
 
     private int getDoctorId() {
+        showDoctors();
+        System.out.println("Podaj ID lekarza");
         int[] id = {0};
+        boolean exist = false;
         do {
             id[0] = Integer.parseInt(scanner.nextLine());
-        } while (clinicDAO.getAllDoctors().stream().anyMatch(x -> x.getId() != id[0]));
+            if (!clinicDAO.getAllDoctors().stream().anyMatch(x -> x.getId() == id[0])){
+                System.out.println("Nie ma lekarza o takim ID");
+            } else exist = true;
+        } while (!exist);
         return id[0];
     }
 
@@ -134,8 +153,10 @@ public class VisitFactory {
     }
 
     private void showMenu() {
-        System.out.println("1. Dodaj harmonogram wizyt lekarza");
-        System.out.println("2. Usuń harmonogram wizyt lekarza");
+        System.out.println("\nObsługa harmonogramu wizyt lekarzy:");
+        System.out.println("1. Wyświetl");
+        System.out.println("2. Dodaj");
+        System.out.println("3. Usuń");
         System.out.println("x. Wyjście");
     }
 

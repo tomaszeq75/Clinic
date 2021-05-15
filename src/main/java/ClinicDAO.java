@@ -5,6 +5,8 @@ import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -230,6 +232,19 @@ public class ClinicDAO {
         return false;
     }
 
+    public void addDoctorAppointment(int doctorId, LocalDateTime dateTime) {
+        initialize();
+
+        Doctor doctor = session.find(Doctor.class, doctorId);
+        Appointment appointment = new Appointment();
+        appointment.setDoctor(doctor);
+        appointment.setDateTime(dateTime);
+
+        Transaction transaction = session.beginTransaction();
+        session.persist(appointment);
+        transaction.commit();
+        close();
+    }
 
 
     public Client getClient(String pesel) {

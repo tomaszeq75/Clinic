@@ -84,7 +84,7 @@ public class AppointmentDetails {
     @Override
     public String toString() {
         String dateTimeString = dateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
-        StringBuilder stringBuilder = new StringBuilder("                                                                      ");
+        StringBuilder stringBuilder = new StringBuilder("                                                                           ");
         stringBuilder.insert(0, "nr: " + id);
         stringBuilder.insert(8, "| " + dateTimeString);
         stringBuilder.insert(27, "| " + (pesel != null ? pesel : ""));
